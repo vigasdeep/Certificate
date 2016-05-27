@@ -112,24 +112,9 @@ $odf->mergeSegment($article);			//Ending the segment Object
 
 // We save the file
 $odf -> saveToDisk("odt/cert/$id.odt"); 
-/*
-//copying the odt file to be converted to PDF
-	copy("odt/cert/$id.odt", "../odt2pdf/cde-root/home/sukhdeep/Desktop/$id.odt");
-
-//changing Directory
-	chdir('../odt2pdf/cde-root/home/sukhdeep');
-
-//Command for conversion to PDF
-	$myCommand = "./libreoffice.cde --headless --convert-to pdf:writer_pdf_Export Desktop/$id.odt --outdir Desktop/";
-	exec ($myCommand);
-
-//Copying the converted file to the PDF folder
-	copy("Desktop/$id.pdf", "../../../../CGS/pdf/$id.pdf");
-	unlink("Desktop/$id.pdf");
-	unlink("Desktop/$id.odt");
-*/
 $source_file = "odt/cert/$id.odt";
-$command = 'unoconv -f pdf --output /var/www/html/Certificate/CGS/pdf/ ' . $source_file;
+$command = 'unoconv -f pdf --output odt/cert/'. $id . '.pdf '  . $source_file;
+putenv('PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/node/bin');
 $result = shell_exec($command);
 echo $result;
 
@@ -145,7 +130,7 @@ echo   '<html>
 	<input class="btn btn-primary" type="submit" value="Download ODT">
 	</form>
 
-	<form action="pdf/'.$id.'.pdf">
+	<form action="odt/cert/'.$id.'.pdf">
 	<input class="btn btn-primary" type="submit" value="View/Download PDF">
 	</form>
 
